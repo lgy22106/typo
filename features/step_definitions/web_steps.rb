@@ -41,7 +41,35 @@ Given /^the blog is set up$/ do
                 :profile_id => 1,
                 :name => 'admin',
                 :state => 'active'})
+  User.create!({:login => 'user',
+                :password => 'aaaaaaaa',
+                :email => 'joe2@snow.com',
+                :profile_id => 2,
+                :name => 'user',
+                :state => 'active'})
 end
+
+And /^I created article "(.+)" with body "(.+)"$/ do |title, body|
+  Given I am logged into the admin panel
+  Given I am on the new article page
+  When I fill in "article_title" with "#{title}"
+  And I fill in "article__body_and_extended_editor" with "#{body}"
+  And I press "Publish"
+end
+
+
+Given /^I am logged in as user$/ do
+  visit '/accounts/login'
+  fill_in 'user_login', :with => 'user'
+  fill_in 'user_password', :with => 'aaaaaaaa'
+  click_button 'Login'
+  if page.respond_to? :should
+    page.should have_content('Login successful')
+  else
+    assert page.has_content?('Login successful')
+  end
+end
+  
 
 And /^I am logged into the admin panel$/ do
   visit '/accounts/login'
