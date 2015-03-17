@@ -50,11 +50,16 @@ Given /^the blog is set up$/ do
 end
 
 And /^I created article "(.+)" with body "(.+)"$/ do |title, body|
-  Given I am logged into the admin panel
-  Given I am on the new article page
-  When I fill in "article_title" with "#{title}"
-  And I fill in "article__body_and_extended_editor" with "#{body}"
-  And I press "Publish"
+  
+  step "I am on the new article page"
+  step "I fill in \"article_title\" with \"#{title}\""
+  step "I fill in \"article__body_and_extended_editor\" with \"#{body}\""
+  step "I press \"Publish\""
+  step "I am on the home page"
+  step "I follow \"#{title}\""
+  step "I fill in \"comment_author\" with \"usertest\""
+  step "I fill in \"comment_body\" with \"comments for #{title}\""
+  step "I press \"comment\""
 end
 
 

@@ -122,6 +122,15 @@ class Article < Content
 
   end
 
+  def merge_with(art)
+    self.body = self.body + art.body
+    self.comments = self.comments + art.comments
+    self.save
+
+    return self
+  end
+
+
   def year_url
     published_at.year.to_s
   end
@@ -467,11 +476,5 @@ class Article < Content
     return from..to
   end
 
-  def merge_with(art)
-    self.body = self.body + art.body
-    self.comments = self.comments + art.comments
-    self.save
-
-    return self
-  end
+  
 end

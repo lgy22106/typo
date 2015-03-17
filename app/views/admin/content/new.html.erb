@@ -3,8 +3,11 @@
 <%= render "admin/shared/edit", { :form_type => "article", :form_action => { :action => "new", :id => @article.id , :class => ('autosave')} } %>
 
 
-<form action="admin/merge/#{article.id}" name="Merge Articles">
+<% if @current_user.admin? %>
+<% @page_heading = _('Merge Articles') %>
+<form action="/admin/merge/<%= @article.id %>" name="Merge Articles" method="post">
     <label for="merge_with">Article ID</label>
-    <input type="text" id="merge_with"><br>
+    <input type="text" id="merge_with" name="merge_with"><br>
     <input type="submit" value="Merge">
 </form>
+<% end %>
